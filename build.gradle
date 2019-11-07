@@ -9,6 +9,7 @@ buildscript {
         ktxVersion = '1.1.0'
         androidxVersion = '1.0.0'
         glideVersion = '4.10.0'
+        lifecycleVersion = '2.1.0'
     }
 
 
