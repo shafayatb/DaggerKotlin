@@ -9,12 +9,15 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
+import javax.inject.Singleton
 
 
 @Module
 object AppModule {
 
     @Provides
+    @Singleton
     @JvmStatic
     fun provideRequestOptions(): RequestOptions {
         return RequestOptions()
@@ -23,6 +26,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     @JvmStatic
     fun provideGlideInstance(
         application: Application,
@@ -35,6 +39,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     @JvmStatic
     fun provideAppDrawable(application: Application): Drawable {
 
