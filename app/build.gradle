@@ -49,6 +49,7 @@ dependencies {
     //viewmodel and livedata
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "android.arch.lifecycle:reactivestreams:$rootProject.reactivestreams_version"
 
     //retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"

@@ -1,40 +1,40 @@
 package com.baldystudios.daggerkotlin.ui.auth
 
-import android.util.Log
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.baldystudios.daggerkotlin.models.User
 import com.baldystudios.daggerkotlin.network.auth.AuthApi
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(val authApi: AuthApi):ViewModel() {
+class AuthViewModel @Inject constructor(val authApi: AuthApi) : ViewModel() {
 
     val TAG = "AuthViewModel"
 
-    fun checkAuthApi(){
+    private val authUser = MediatorLiveData<User>()
 
-        authApi.getUser(1).toObservable()
-            .subscribeOn(Schedulers.io())
-            .subscribe(object : Observer<User> {
-                override fun onComplete() {
+    fun authenticateWithUserId(userId: Int) {
+        val source: LiveData<User> = LiveDataReactiveStreams.fromPublisher(
+            authApi.getUser(userId)
+                .subscribeOn(Schedulers.io())
+        )
 
-                }
 
-                override fun onSubscribe(d: Disposable) {
+        authUser.addSource(source) {
+            Log.d(TAG, "Please Work")
+            authUser.value = it!!
+            authUser.removeSource(source)
+        }
 
-                }
 
-                override fun onNext(user: User) {
-                    Log.d(TAG, "OnNext: " + user.email)
-                }
+    }
 
-                override fun onError(e: Throwable) {
-                    Log.d(TAG, "onError: " + e.localizedMessage)
-                }
-            })
+    fun observeUser(): LiveData<User> {
+        return authUser
     }
 
 }
