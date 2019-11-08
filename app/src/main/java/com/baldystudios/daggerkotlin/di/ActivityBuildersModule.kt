@@ -1,5 +1,6 @@
 package com.baldystudios.daggerkotlin.di
 
+import com.baldystudios.daggerkotlin.di.auth.AuthModule
 import com.baldystudios.daggerkotlin.di.auth.AuthViewModelsModule
 import com.baldystudios.daggerkotlin.ui.auth.AuthActivity
 import dagger.Module
@@ -10,8 +11,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(
-        modules = [AuthViewModelsModule::class]
-    )
+        modules = [AuthViewModelsModule::class, AuthModule::class])
     abstract fun contributesAuthActiity(): AuthActivity
 
 

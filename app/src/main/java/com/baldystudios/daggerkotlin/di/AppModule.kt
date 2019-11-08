@@ -4,12 +4,15 @@ import android.app.Application
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.baldystudios.daggerkotlin.R
+import com.baldystudios.daggerkotlin.utils.BASE_URL
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 
@@ -45,6 +48,16 @@ object AppModule {
 
         return ContextCompat.getDrawable(application, R.drawable.feature_image)!!
 
+    }
+
+    @Reusable
+    @Provides
+    @JvmStatic
+    fun provideRetrofit(): Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
     }
 
 }

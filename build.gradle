@@ -10,6 +10,7 @@ buildscript {
         androidxVersion = '1.0.0'
         glideVersion = '4.10.0'
         lifecycleVersion = '2.1.0'
+        retrofit = '2.6.0'
     }
 
 
