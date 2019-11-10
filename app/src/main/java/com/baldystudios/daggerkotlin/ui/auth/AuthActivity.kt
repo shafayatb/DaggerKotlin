@@ -53,23 +53,23 @@ class AuthActivity : DaggerAppCompatActivity() {
 
             it?.let { userAuthResource ->
 
-                when (userAuthResource.authStatus) {
+                when (userAuthResource::class) {
 
-                    AuthResource.AuthStatus.LOADING -> {
+                    AuthResource.Loading::class -> {
                         showProgressBar(true)
                     }
 
-                    AuthResource.AuthStatus.AUTHENTICATED -> {
+                    AuthResource.Authenticated::class-> {
                         showProgressBar(false)
                         Log.d(TAG, "OnChanged: ${userAuthResource.data?.email}")
                     }
 
-                    AuthResource.AuthStatus.ERROR -> {
+                    AuthResource.Error::class -> {
                         showProgressBar(false)
                         Log.e(TAG, "OnChanged: ${userAuthResource.message}")
                     }
 
-                    AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                    AuthResource.NotAuthenticated::class -> {
                         showProgressBar(false)
                     }
                     else -> {
