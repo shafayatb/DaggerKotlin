@@ -39,7 +39,7 @@ class AuthActivity : DaggerAppCompatActivity() {
 
         setLogo()
 
-        button.setOnClickListener{
+        button.setOnClickListener {
             attemptLogin()
         }
 
@@ -49,18 +49,49 @@ class AuthActivity : DaggerAppCompatActivity() {
 
     private fun subscribeObservers() {
 
-        authViewModel.observeUser().observe(this, Observer<User> {
-            it?.let { user ->
-                Log.d(TAG, "OnChanged: ${user.email}")
+        authViewModel.observeUser().observe(this, Observer<AuthResource<User>> {
+
+            it?.let { userAuthResource ->
+
+                when (userAuthResource.authStatus) {
+
+                    AuthResource.AuthStatus.LOADING -> {
+                        showProgressBar(true)
+                    }
+
+                    AuthResource.AuthStatus.AUTHENTICATED -> {
+                        showProgressBar(false)
+                        Log.d(TAG, "OnChanged: ${userAuthResource.data?.email}")
+                    }
+
+                    AuthResource.AuthStatus.ERROR -> {
+                        showProgressBar(false)
+                        Log.e(TAG, "OnChanged: ${userAuthResource.message}")
+                    }
+
+                    AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                        showProgressBar(false)
+                    }
+                    else -> {
+                        Log.e(TAG, "OnChanged: Nothing is working")
+                    }
+                }
+
             }
+
         })
+
+    }
+
+    private fun showProgressBar(isVisible: Boolean) {
+
+        if (isVisible) progressBar.visibility = View.VISIBLE else progressBar.visibility = View.GONE
 
     }
 
     private fun setLogo() {
         requestManager.load(logo).into(login_banner)
     }
-
 
 
     private fun attemptLogin() {

@@ -1,31 +1,31 @@
 package com.baldystudios.daggerkotlin.models
 
 data class User(
-    val address: Address? = null,
-    val company: Company? = null,
-    val email: String? = null,
-    val id: Int? = null,
-    val name: String? = null,
-    val phone: String? = null,
-    val username: String? = null,
-    val website: String? = null
+    var address: Address? = null,
+    var company: Company? = null,
+    var email: String? = null,
+    var id: Int? = null,
+    var name: String? = null,
+    var phone: String? = null,
+    var username: String? = null,
+    var website: String? = null
 )
 
 data class Geo(
-    val lat: String? = null,
-    val lng: String? = null
+    var lat: String? = null,
+    var lng: String? = null
 )
 
 data class Company(
-    val bs: String? = null,
-    val catchPhrase: String? = null,
-    val name: String? = null
+    var bs: String? = null,
+    var catchPhrase: String? = null,
+    var name: String? = null
 )
 
 data class Address(
-    val city: String? = null,
-    val geo: Geo? = null,
-    val street: String? = null,
-    val suite: String? = null,
-    val zipcode: String? = null
+    var city: String? = null,
+    var geo: Geo? = null,
+    var street: String? = null,
+    var suite: String? = null,
+    var zipcode: String? = null
 )
