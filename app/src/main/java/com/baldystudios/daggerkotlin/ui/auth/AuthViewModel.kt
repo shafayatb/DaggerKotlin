@@ -1,27 +1,33 @@
 package com.baldystudios.daggerkotlin.ui.auth
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.baldystudios.daggerkotlin.SessionManager
 import com.baldystudios.daggerkotlin.models.User
 import com.baldystudios.daggerkotlin.network.auth.AuthApi
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(val authApi: AuthApi) : ViewModel() {
+class AuthViewModel @Inject constructor(val authApi: AuthApi, val sessionManager: SessionManager) :
+    ViewModel() {
 
     val TAG = "AuthViewModel"
 
-    private val authUser = MediatorLiveData<AuthResource<User>>()
-
     fun authenticateWithUserId(userId: Int) {
 
-        authUser.value = AuthResource.Loading(null)
+        Log.d(TAG, "Attempting to login...")
 
-        val source = LiveDataReactiveStreams.fromPublisher<AuthResource<User>>(
+        sessionManager.authenticateId(queryUserId(userId))
+
+
+    }
+
+    private fun queryUserId(userId: Int): LiveData<AuthResource<User>> {
+        return LiveDataReactiveStreams.fromPublisher<AuthResource<User>>(
             authApi.getUser(userId)
                 .subscribeOn(Schedulers.io())
                 .onErrorReturn {
@@ -36,22 +42,11 @@ class AuthViewModel @Inject constructor(val authApi: AuthApi) : ViewModel() {
                     AuthResource.Authenticated(it)
 
                 })
-
-
         )
-
-
-        authUser.addSource(source) {
-
-            authUser.value = it
-            authUser.removeSource(source)
-        }
-
-
     }
 
-    fun observeUser(): LiveData<AuthResource<User>> {
-        return authUser
+    fun observeAuthState(): LiveData<AuthResource<User>> {
+        return sessionManager.authUser
     }
 
 }
