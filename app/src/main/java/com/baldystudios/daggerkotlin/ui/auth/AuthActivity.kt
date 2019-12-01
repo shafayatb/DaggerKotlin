@@ -1,5 +1,6 @@
 package com.baldystudios.daggerkotlin.ui.auth
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.baldystudios.daggerkotlin.R
 import com.baldystudios.daggerkotlin.models.User
+import com.baldystudios.daggerkotlin.ui.main.MainActivity
 import com.baldystudios.daggerkotlin.viewmodels.ViewModelProvidersFactory
 import com.bumptech.glide.RequestManager
 import dagger.android.support.DaggerAppCompatActivity
@@ -61,6 +63,7 @@ class AuthActivity : DaggerAppCompatActivity() {
 
                     AuthResource.Authenticated::class-> {
                         showProgressBar(false)
+                        onLoginSuccess()
                         Log.d(TAG, "OnChanged: ${userAuthResource.data?.email}")
                     }
 
@@ -80,6 +83,13 @@ class AuthActivity : DaggerAppCompatActivity() {
             }
 
         })
+
+    }
+
+    private fun onLoginSuccess(){
+
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
 
     }
 
