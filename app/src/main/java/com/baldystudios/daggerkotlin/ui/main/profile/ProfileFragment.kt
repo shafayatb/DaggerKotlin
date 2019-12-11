@@ -31,8 +31,6 @@ class ProfileFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        Toast.makeText(activity, TAG, Toast.LENGTH_LONG).show()
-
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
