@@ -10,7 +10,7 @@ object AuthModule {
 
     @Provides
     @JvmStatic
-    fun provideAuthApi(retrofit: Retrofit): AuthApi{
+    fun provideAuthApi(retrofit: Retrofit): AuthApi {
 
         return retrofit.create(AuthApi::class.java)
 

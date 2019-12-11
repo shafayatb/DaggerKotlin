@@ -3,6 +3,7 @@ package com.baldystudios.daggerkotlin.di
 import com.baldystudios.daggerkotlin.di.auth.AuthModule
 import com.baldystudios.daggerkotlin.di.auth.AuthViewModelsModule
 import com.baldystudios.daggerkotlin.di.main.MainFragmentBuildersModule
+import com.baldystudios.daggerkotlin.di.main.MainModule
 import com.baldystudios.daggerkotlin.di.main.ProfileViewModelModule
 import com.baldystudios.daggerkotlin.ui.auth.AuthActivity
 import com.baldystudios.daggerkotlin.ui.main.MainActivity
@@ -19,7 +20,7 @@ abstract class ActivityBuildersModule {
     abstract fun contributesAuthActiity(): AuthActivity
 
     @ContributesAndroidInjector(
-        modules = [MainFragmentBuildersModule::class, ProfileViewModelModule::class]
+        modules = [MainFragmentBuildersModule::class, ProfileViewModelModule::class, MainModule::class]
     )
     abstract fun contributesMainActiity(): MainActivity
 }
