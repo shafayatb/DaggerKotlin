@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.baldystudios.daggerkotlin.R
 import com.baldystudios.daggerkotlin.models.Post
 import com.baldystudios.daggerkotlin.ui.main.Resource
+import com.baldystudios.daggerkotlin.utils.VerticalSpaceItemDecoration
 import com.baldystudios.daggerkotlin.viewmodels.ViewModelProvidersFactory
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_posts.*
 import javax.inject.Inject
 
 class PostsFragment : DaggerFragment() {
@@ -19,6 +22,12 @@ class PostsFragment : DaggerFragment() {
     private val TAG = "PostsFragment"
 
     lateinit var postsViewModel: PostsViewModel
+
+    @Inject
+    lateinit var postRecyclerViewAdapter: PostRecyclerViewAdapter
+
+    @Inject
+    lateinit var linearLayoutManager: LinearLayoutManager
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
@@ -38,6 +47,7 @@ class PostsFragment : DaggerFragment() {
 
         postsViewModel.test()
 
+        initRecyclerView()
         subscribeObeservers()
 
     }
@@ -48,9 +58,40 @@ class PostsFragment : DaggerFragment() {
 
             it?.let {
                 Log.v(TAG, "OnChanged: ${it.data}")
+                when (it::class) {
+
+                    Resource.Loading::class -> {
+                        Log.d(TAG, "OnChange: LOADING...")
+                    }
+
+                    Resource.Success::class -> {
+                        Log.d(TAG, "OnChange: got posts....")
+                        it.data?.let { postList ->
+                            postRecyclerViewAdapter.setPosts(postList)
+                        }
+
+                    }
+
+                    Resource.Error::class -> {
+                        Log.e(TAG, "OnChange: ${it.message}")
+                    }
+
+                    else -> {
+                        Log.e(TAG, "OnChange: Nothing happend")
+                    }
+
+                }
             }
 
         })
+
+    }
+
+    fun initRecyclerView() {
+
+        recycler_view.layoutManager = linearLayoutManager
+        recycler_view.addItemDecoration(VerticalSpaceItemDecoration(15))
+        recycler_view.adapter = postRecyclerViewAdapter
 
     }
 

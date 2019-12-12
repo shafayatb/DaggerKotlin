@@ -1,6 +1,10 @@
 package com.baldystudios.daggerkotlin.di.main
 
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.baldystudios.daggerkotlin.network.main.MainApi
+import com.baldystudios.daggerkotlin.ui.main.MainActivity
+import com.baldystudios.daggerkotlin.ui.main.posts.PostRecyclerViewAdapter
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -8,6 +12,18 @@ import retrofit2.Retrofit
 
 @Module
 object MainModule {
+
+    @Provides
+    @JvmStatic
+    fun providePostAdapter(): PostRecyclerViewAdapter {
+        return PostRecyclerViewAdapter()
+    }
+
+    @Provides
+    @JvmStatic
+    fun provideLinearLayoutManager(mainActivity: MainActivity): LinearLayoutManager {
+        return LinearLayoutManager(mainActivity, RecyclerView.VERTICAL, false)
+    }
 
     @Provides
     @JvmStatic
