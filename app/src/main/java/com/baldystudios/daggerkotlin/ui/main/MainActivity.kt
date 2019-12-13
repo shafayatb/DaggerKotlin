@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.GravityCompat
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.baldystudios.daggerkotlin.BaseActivity
 import com.baldystudios.daggerkotlin.R
-import com.baldystudios.daggerkotlin.ui.main.posts.PostsFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,15 +17,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        testFragment()
+        init()
 
     }
 
-    private fun testFragment() {
+    private fun init() {
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, PostsFragment())
-            .commit()
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
+        NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
+        NavigationUI.setupWithNavController(nav_view, navController)
+
+        nav_view.setNavigationItemSelectedListener(this)
 
     }
 
@@ -53,13 +57,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         when (menu.itemId) {
 
-            R.id.nav_profile -> {
+            R.id.nav_profile -> Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.profileScreen)
 
-            }
-
-            R.id.nav_posts -> {
-
-            }
+            R.id.nav_posts -> Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.postsScreen)
 
         }
 
