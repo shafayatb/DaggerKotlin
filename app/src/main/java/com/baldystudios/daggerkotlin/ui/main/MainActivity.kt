@@ -3,12 +3,14 @@ package com.baldystudios.daggerkotlin.ui.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import com.baldystudios.daggerkotlin.BaseActivity
 import com.baldystudios.daggerkotlin.R
 import com.baldystudios.daggerkotlin.ui.main.posts.PostsFragment
-import com.baldystudios.daggerkotlin.ui.main.profile.ProfileFragment
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,26 @@ class MainActivity : BaseActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onNavigationItemSelected(menu: MenuItem): Boolean {
+
+        when (menu.itemId) {
+
+            R.id.nav_profile -> {
+
+            }
+
+            R.id.nav_posts -> {
+
+            }
+
+        }
+
+        menu.isChecked = true
+        drawer_layout.closeDrawer(GravityCompat.START)
+
+        return true
     }
 
 }
