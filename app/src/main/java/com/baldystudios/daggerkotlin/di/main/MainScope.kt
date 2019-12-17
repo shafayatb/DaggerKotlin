@@ -3,6 +3,5 @@ package com.baldystudios.daggerkotlin.di.main
 import javax.inject.Scope
 
 @Scope
-@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
+@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
 annotation class MainScope
