@@ -13,18 +13,21 @@ import retrofit2.Retrofit
 @Module
 object MainModule {
 
+    @MainScope
     @Provides
     @JvmStatic
     fun providePostAdapter(): PostRecyclerViewAdapter {
         return PostRecyclerViewAdapter()
     }
 
+    @MainScope
     @Provides
     @JvmStatic
     fun provideLinearLayoutManager(mainActivity: MainActivity): LinearLayoutManager {
         return LinearLayoutManager(mainActivity, RecyclerView.VERTICAL, false)
     }
 
+    @MainScope
     @Provides
     @JvmStatic
     fun provideMainApi(retrofit: Retrofit): MainApi {
