@@ -16,6 +16,7 @@ import com.baldystudios.daggerkotlin.viewmodels.ViewModelProvidersFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_posts.*
 import javax.inject.Inject
+import javax.inject.Provider
 
 class PostsFragment : DaggerFragment() {
 
@@ -27,7 +28,7 @@ class PostsFragment : DaggerFragment() {
     lateinit var postRecyclerViewAdapter: PostRecyclerViewAdapter
 
     @Inject
-    lateinit var linearLayoutManager: LinearLayoutManager
+    lateinit var linearLayoutManager: Provider<LinearLayoutManager>
 
     @Inject
     lateinit var providersFactory: ViewModelProvidersFactory
@@ -89,7 +90,7 @@ class PostsFragment : DaggerFragment() {
 
     fun initRecyclerView() {
 
-        recycler_view.layoutManager = linearLayoutManager
+        recycler_view.layoutManager = linearLayoutManager.get()
         recycler_view.addItemDecoration(VerticalSpaceItemDecoration(15))
         recycler_view.adapter = postRecyclerViewAdapter
 
