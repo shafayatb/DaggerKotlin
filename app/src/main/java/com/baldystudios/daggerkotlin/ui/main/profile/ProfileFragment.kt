@@ -54,14 +54,14 @@ class ProfileFragment : DaggerFragment() {
 
                 it?.let { userAuthResource ->
 
-                    when (userAuthResource::class) {
+                    when (userAuthResource) {
 
-                        AuthResource.Authenticated::class -> {
+                        is AuthResource.Authenticated -> {
                             setUserDetails(userAuthResource.data)
                             Log.d(TAG, "OnChanged: ${userAuthResource.data?.email}")
                         }
 
-                        AuthResource.Error::class -> {
+                        is AuthResource.Error -> {
                             setErrorDetails(userAuthResource.message)
                             Log.e(TAG, "OnChanged: ${userAuthResource.message}")
                         }

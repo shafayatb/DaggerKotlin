@@ -7,6 +7,7 @@ import com.baldystudios.daggerkotlin.ui.main.MainActivity
 import com.baldystudios.daggerkotlin.ui.main.posts.PostRecyclerViewAdapter
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import retrofit2.Retrofit
 
 
@@ -20,7 +21,8 @@ object MainModule {
         return PostRecyclerViewAdapter()
     }
 
-    @MainScope
+    //@MainScope
+    @Reusable
     @Provides
     @JvmStatic
     fun provideLinearLayoutManager(mainActivity: MainActivity): LinearLayoutManager {

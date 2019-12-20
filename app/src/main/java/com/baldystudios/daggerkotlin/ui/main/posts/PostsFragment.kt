@@ -59,13 +59,13 @@ class PostsFragment : DaggerFragment() {
 
             it?.let {
                 Log.v(TAG, "OnChanged: ${it.data}")
-                when (it::class) {
+                when (it) {
 
-                    Resource.Loading::class -> {
+                    is Resource.Loading -> {
                         Log.d(TAG, "OnChange: LOADING...")
                     }
 
-                    Resource.Success::class -> {
+                    is Resource.Success -> {
                         Log.d(TAG, "OnChange: got posts....")
                         it.data?.let { postList ->
                             postRecyclerViewAdapter.setPosts(postList)
@@ -73,12 +73,8 @@ class PostsFragment : DaggerFragment() {
 
                     }
 
-                    Resource.Error::class -> {
+                    is Resource.Error -> {
                         Log.e(TAG, "OnChange: ${it.message}")
-                    }
-
-                    else -> {
-                        Log.e(TAG, "OnChange: Nothing happend")
                     }
 
                 }
